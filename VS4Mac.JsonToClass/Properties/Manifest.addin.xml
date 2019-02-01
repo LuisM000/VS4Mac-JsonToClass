@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Addin
+    id = "MonoDevelop.JsonToClass">
+    <Header>
+        <Name>JSON to class Addin</Name>
+        <Description>Addin to convert JSON to class.</Description>
+        <Author>Luis Marcos Rivera</Author>
+        <Copyright>Luis Marcos Rivera</Copyright>
+        <Url>https://github.com/LuisM000/VS4Mac-JsonToClass</Url>
+    </Header>
+    <Extension 
+        path = "/MonoDevelop/Ide/Commands/Edit">
+        <Command 
+            id = "JsonToClass.Commands.CreateCodeClassFromJson"
+            _label = "Paste JSON as code"
+            defaultHandler = "VS4Mac.JsonToClass.Commands.CreateCodeClassFromJsonCommand" />
+    </Extension>
+    <Extension 
+        path = "/MonoDevelop/Ide/MainMenu/Edit">
+        <CommandItem 
+            id="JsonToClass.Commands.CreateCodeClassFromJson" />
+    </Extension>
+</Addin>
