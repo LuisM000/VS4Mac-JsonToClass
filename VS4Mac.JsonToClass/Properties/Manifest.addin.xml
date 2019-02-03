@@ -14,10 +14,19 @@
             id = "JsonToClass.Commands.CreateCodeClassFromJson"
             _label = "Paste JSON as code"
             defaultHandler = "VS4Mac.JsonToClass.Commands.CreateCodeClassFromJsonCommand" />
+         <Command 
+            id="JsonToClass.Commands.AddCodeClassFileCommand" 
+            _label="Create class from JSON" 
+            defaultHandler="VS4Mac.JsonToClass.Commands.AddCodeClassFileCommand" />
     </Extension>
     <Extension 
         path = "/MonoDevelop/Ide/MainMenu/Edit">
         <CommandItem 
             id="JsonToClass.Commands.CreateCodeClassFromJson" />
+    </Extension>
+    <Extension 
+        path="/MonoDevelop/Ide/ContextMenu/ProjectPad">      
+        <CommandItem 
+            id="JsonToClass.Commands.AddCodeClassFileCommand" />  
     </Extension>
 </Addin>
