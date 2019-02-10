@@ -9,5 +9,7 @@
     <Folder Include="Commands\" />
     <Folder Include="Services\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Views\" />
+    <Folder Include="Model\" />
   </ItemGroup>
 </Project>
