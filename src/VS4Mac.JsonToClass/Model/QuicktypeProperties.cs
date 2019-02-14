@@ -11,6 +11,9 @@ namespace VS4Mac.JsonToClass.Model
         public string Namespace { get; set; }
         public ArrayType ArrayType { get; set; }
         public Feature FeatureOutput { get; set; }
+        public bool CheckRequired { get; set; }
+        public bool AllPropertiesOptional { get; set; }
+
 
         public QuicktypeProperties(string jsonFilename, string outputFile)
         {
@@ -29,6 +32,11 @@ namespace VS4Mac.JsonToClass.Model
 
             arguments += $" --features {this.FeatureOutput.GetDescription()}";
 
+            if (this.CheckRequired)
+                arguments += " --check-required";
+
+            if (this.AllPropertiesOptional)
+                arguments += " --all-properties-optional";
 
             return arguments;
         }

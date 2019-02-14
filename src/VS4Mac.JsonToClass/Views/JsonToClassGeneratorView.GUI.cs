@@ -35,6 +35,10 @@ namespace VS4Mac.JsonToClass.Views
         Label outputFeatureLabel;
         ComboBox outputFeatureComboBox;
 
+        CheckBox checkRequiredCheckBox;
+
+        CheckBox allPropertiesOptionalCheckBox;
+
         private void InitializeComponent()
         {
             Init();
@@ -66,6 +70,10 @@ namespace VS4Mac.JsonToClass.Views
             outputFeatureComboBox.Items.Add(Model.Feature.AttributesOnly, "Attributes only");
             outputFeatureComboBox.Items.Add(Model.Feature.JustTypes, "Just Types");
             outputFeatureComboBox.SelectedIndex = 0;
+
+            checkRequiredCheckBox = new CheckBox("Fail if required properties are missing");
+
+            allPropertiesOptionalCheckBox = new CheckBox("Make all properties optional");
         }
 
         private void Build()
@@ -82,6 +90,8 @@ namespace VS4Mac.JsonToClass.Views
             mainVBox.PackStart(namespaceBox, marginLeft: 10, marginTop: 10, marginRight: 10);
             mainVBox.PackStart(arrayTypeBox, marginLeft: 10, marginTop: 5, marginRight: 10);
             mainVBox.PackStart(outputFeatureBox, marginLeft: 10, marginTop: 5, marginRight: 10);
+            mainVBox.PackStart(checkRequiredCheckBox, marginLeft: 10, marginRight: 10);
+            mainVBox.PackStart(allPropertiesOptionalCheckBox, marginLeft: 10, marginRight: 10);
             mainVBox.PackEnd(generateButton, false, WidgetPlacement.End, WidgetPlacement.End, margin: 10);
         }
 
