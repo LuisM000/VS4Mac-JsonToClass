@@ -1,17 +1,39 @@
 ﻿using System;
+using MonoDevelop.Components;
 using Xwt;
 
 namespace VS4Mac.JsonToClass.Views
 {
     public partial class JsonToClassGeneratorView
     {
-        VBox mainVBox;
+        private Control control;
+        public override Control Control
+        {
+            get
+            {
+                if (control == null)
+                {
+                    control = new XwtControl(mainVBox);
+                }
+                return control;
+            }
+        }
 
+
+        VBox mainVBox;
         Button generateButton;
 
         VBox namespaceBox;
         Label namespaceLabel;
         TextEntry namespaceEntry;
+
+        VBox arrayTypeBox;
+        Label arrayTypeLabel;
+        ComboBox arrayTypeComboBox;
+
+        VBox outputFeatureBox;
+        Label outputFeatureLabel;
+        ComboBox outputFeatureComboBox;
 
         private void InitializeComponent()
         {
@@ -29,6 +51,21 @@ namespace VS4Mac.JsonToClass.Views
             namespaceBox = new VBox();
             namespaceLabel = new Label("Generated namespace");
             namespaceEntry = new TextEntry();
+
+            arrayTypeBox = new VBox();
+            arrayTypeLabel = new Label("Use T[] or List<T>");
+            arrayTypeComboBox = new ComboBox();
+            arrayTypeComboBox.Items.Add(Model.ArrayType.Array, "Array");
+            arrayTypeComboBox.Items.Add(Model.ArrayType.List, "List");
+            arrayTypeComboBox.SelectedIndex = 0;
+
+            outputFeatureBox = new VBox();
+            outputFeatureLabel = new Label("Output features");
+            outputFeatureComboBox = new ComboBox();
+            outputFeatureComboBox.Items.Add(Model.Feature.Complete, "Complete");
+            outputFeatureComboBox.Items.Add(Model.Feature.AttributesOnly, "Attributes only");
+            outputFeatureComboBox.Items.Add(Model.Feature.JustTypes, "Just Types");
+            outputFeatureComboBox.SelectedIndex = 0;
         }
 
         private void Build()
@@ -36,11 +73,16 @@ namespace VS4Mac.JsonToClass.Views
             namespaceBox.PackStart(namespaceLabel);
             namespaceBox.PackEnd(namespaceEntry);
 
+            arrayTypeBox.PackStart(arrayTypeLabel);
+            arrayTypeBox.PackEnd(arrayTypeComboBox);
 
-            mainVBox.PackStart(namespaceBox);
-            mainVBox.PackEnd(generateButton, false, WidgetPlacement.End, WidgetPlacement.End);
+            outputFeatureBox.PackStart(outputFeatureLabel);
+            outputFeatureBox.PackEnd(outputFeatureComboBox);
 
-            this.Content = mainVBox;
+            mainVBox.PackStart(namespaceBox, marginLeft: 10, marginTop: 10, marginRight: 10);
+            mainVBox.PackStart(arrayTypeBox, marginLeft: 10, marginTop: 5, marginRight: 10);
+            mainVBox.PackStart(outputFeatureBox, marginLeft: 10, marginTop: 5, marginRight: 10);
+            mainVBox.PackEnd(generateButton, false, WidgetPlacement.End, WidgetPlacement.End, margin: 10);
         }
 
         private void AttachToEvents()

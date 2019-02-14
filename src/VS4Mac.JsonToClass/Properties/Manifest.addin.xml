@@ -8,16 +8,20 @@
         <Copyright>Luis Marcos Rivera</Copyright>
         <Url>https://github.com/LuisM000/VS4Mac-JsonToClass</Url>
     </Header>
+    <Extension path="/MonoDevelop/Ide/Pads">
+        <Pad 
+            id=" VS4Mac.JsonToClass.Views.JsonToClassGeneratorView"
+            _label="JSON to class generator"
+            icon="md-information"
+            class=" VS4Mac.JsonToClass.Views.JsonToClassGeneratorView"
+            defaultPlacement="right"/>
+    </Extension>
     <Extension 
         path = "/MonoDevelop/Ide/Commands/Edit">
         <Command 
             id = "JsonToClass.Commands.CreateCodeClassFromJson"
             _label = "Paste JSON as code"
             defaultHandler = "VS4Mac.JsonToClass.Commands.CreateCodeClassFromJsonCommand" />
-         <Command 
-            id = "JsonToClass.Commands.JsonToClassGeneratorCommand"
-            _label = "JSON to class advanced generator"
-            defaultHandler = "VS4Mac.JsonToClass.Commands.JsonToClassGeneratorCommand" />
          <Command 
             id="JsonToClass.Commands.AddCodeClassFileCommand" 
             _label="Create class from JSON" 

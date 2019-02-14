@@ -12,4 +12,7 @@
     <Folder Include="Views\" />
     <Folder Include="Model\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Commands\JsonToClassGeneratorCommand.cs" />
+  </ItemGroup>
 </Project>
