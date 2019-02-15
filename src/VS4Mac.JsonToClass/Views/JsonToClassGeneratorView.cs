@@ -33,6 +33,7 @@ namespace VS4Mac.JsonToClass.Views
             quicktypeProperties.FeatureOutput = (Model.Feature)outputFeatureComboBox.SelectedItem;
             quicktypeProperties.CheckRequired = checkRequiredCheckBox.Active;
             quicktypeProperties.AllPropertiesOptional = allPropertiesOptionalCheckBox.Active;
+            quicktypeProperties.CSharpVersion = (Model.CSharpVersion)languageVersionComboBox.SelectedItem;
 
             var generatedClass = jsonToClassService.GenerateClassCodeFromJson(Clipboard.GetText(), quicktypeProperties);
             IdeApp.Workbench.ActiveDocument.Editor.InsertAtCaret(generatedClass);

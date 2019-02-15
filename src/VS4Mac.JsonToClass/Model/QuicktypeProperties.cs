@@ -13,7 +13,7 @@ namespace VS4Mac.JsonToClass.Model
         public Feature FeatureOutput { get; set; }
         public bool CheckRequired { get; set; }
         public bool AllPropertiesOptional { get; set; }
-
+        public CSharpVersion CSharpVersion { get; set; }
 
         public QuicktypeProperties(string jsonFilename, string outputFile)
         {
@@ -37,6 +37,8 @@ namespace VS4Mac.JsonToClass.Model
 
             if (this.AllPropertiesOptional)
                 arguments += " --all-properties-optional";
+
+            arguments += $" --csharp-version {this.CSharpVersion.GetDescription()}";
 
             return arguments;
         }
