@@ -10,10 +10,10 @@
     </Header>
     <Extension path="/MonoDevelop/Ide/Pads">
         <Pad 
-            id=" VS4Mac.JsonToClass.Views.JsonToClassGeneratorView"
+            id="VS4Mac.JsonToClass.Views.JsonToClassGeneratorView"
             _label="JSON to class generator"
             icon="md-information"
-            class=" VS4Mac.JsonToClass.Views.JsonToClassGeneratorView"
+            class="VS4Mac.JsonToClass.Views.JsonToClassGeneratorView"
             defaultPlacement="right"/>
     </Extension>
     <Extension 
