@@ -52,6 +52,38 @@ namespace VS4Mac.JsonToClass.Views
         Label languageVersionLabel;
         ComboBox languageVersionComboBox;
 
+        VBox propertyDensityBox;
+        Label propertyDensityLabel;
+        ComboBox propertyDensityComboBox;
+
+        VBox numberTypeBox;
+        Label numberTypeLabel;
+        ComboBox numberTypeComboBox;
+
+        VBox anyTypeBox;
+        Label anyTypeLabel;
+        ComboBox anyTypeComboBox;
+
+        VBox baseClassBox;
+        Label baseClassLabel;
+        ComboBox baseClassComboBox;
+
+        CheckBox detectUUIDsCheckBox;
+
+        CheckBox detectBooleansInStringsCheckBox;
+
+        CheckBox detectDatesAndTimesCheckBox;
+
+        CheckBox detectEnumsCheckBox;
+
+        CheckBox detectIntegersInStringsCheckBox;
+
+        CheckBox detectMapsCheckBox;
+
+        CheckBox noIgnoreJsonRefsCheckBox;
+
+        CheckBox mergeSimiliarClassesCheckBox;
+
         #endregion
 
         private void InitializeComponent()
@@ -65,8 +97,8 @@ namespace VS4Mac.JsonToClass.Views
         {
             mainVBox = new VBox();
             mainNotebook = new Notebook();
-            languageTabVBox = new VBox();// { BackgroundColor = MonoDevelop.Ide.Gui.Styles.PadBackground };
-            otherTabVBox = new VBox();// { BackgroundColor = MonoDevelop.Ide.Gui.Styles.PadBackground };
+            languageTabVBox = new VBox();
+            otherTabVBox = new VBox();
             generateButton = new Button("Generate")
             {
                 BackgroundColor = Styles.BaseSelectionBackgroundColor,
@@ -102,7 +134,45 @@ namespace VS4Mac.JsonToClass.Views
             languageVersionComboBox.Items.Add(Model.CSharpVersion.Five, "5");
             languageVersionComboBox.Items.Add(Model.CSharpVersion.Six, "6");
             languageVersionComboBox.SelectedIndex = 1;
+
+            propertyDensityBox = new VBox();
+            propertyDensityLabel = new Label("Property density");
+            propertyDensityComboBox = new ComboBox();
+            propertyDensityComboBox.Items.Add(Model.Density.Normal, "Normal");
+            propertyDensityComboBox.Items.Add(Model.Density.Dense, "Dense");
+            propertyDensityComboBox.SelectedIndex = 0;
+
+            numberTypeBox = new VBox();
+            numberTypeLabel = new Label("Type to use for numbers");
+            numberTypeComboBox = new ComboBox();
+            numberTypeComboBox.Items.Add(Model.NumberType.Double, "Double");
+            numberTypeComboBox.Items.Add(Model.NumberType.Decimal, "Decimal");
+            numberTypeComboBox.SelectedIndex = 0;
+
+            anyTypeBox = new VBox();
+            anyTypeLabel = new Label("Type to use for \"any\"");
+            anyTypeComboBox = new ComboBox();
+            anyTypeComboBox.Items.Add(Model.AnyType.Object, "Object");
+            anyTypeComboBox.Items.Add(Model.AnyType.Dynamic, "Dynamic");
+            anyTypeComboBox.SelectedIndex = 0;
+
+            baseClassBox = new VBox();
+            baseClassLabel = new Label("Base class");
+            baseClassComboBox = new ComboBox();
+            baseClassComboBox.Items.Add(Model.BaseClassType.EntityData, "Entity Data");
+            baseClassComboBox.Items.Add(Model.BaseClassType.Object, "Object");
+            baseClassComboBox.SelectedIndex = 1;
+
+            detectUUIDsCheckBox = new CheckBox("Detect UUIDs") { Active = true };
+            detectBooleansInStringsCheckBox = new CheckBox("Detect booleans in strings") { Active = true };
+            detectDatesAndTimesCheckBox = new CheckBox("Detect dates & times") { Active = true };
+            detectEnumsCheckBox = new CheckBox("Detect enums") { Active = true };
+            detectIntegersInStringsCheckBox = new CheckBox("Detect integers in strings") { Active = true };
+            detectMapsCheckBox = new CheckBox("Detect maps") { Active = true };
+            noIgnoreJsonRefsCheckBox = new CheckBox("Don't treat $ref as a reference in JSON") { Active = true };
+            mergeSimiliarClassesCheckBox = new CheckBox("Merge similar classes") { Active = true };
         }
+
 
         private void Build()
         {
@@ -124,13 +194,38 @@ namespace VS4Mac.JsonToClass.Views
             languageVersionBox.PackStart(languageVersionLabel);
             languageVersionBox.PackEnd(languageVersionComboBox);
 
+            propertyDensityBox.PackStart(propertyDensityLabel);
+            propertyDensityBox.PackEnd(propertyDensityComboBox);
+
+            numberTypeBox.PackStart(numberTypeLabel);
+            numberTypeBox.PackEnd(numberTypeComboBox);
+
+            anyTypeBox.PackStart(anyTypeLabel);
+            anyTypeBox.PackEnd(anyTypeComboBox);
+
+            baseClassBox.PackStart(baseClassLabel);
+            baseClassBox.PackEnd(baseClassComboBox);
+
             otherTabVBox.PackStart(languageVersionBox, marginLeft: 10, marginTop: 10, marginRight: 10);
+            otherTabVBox.PackStart(propertyDensityBox, marginLeft: 10, marginTop: 5, marginRight: 10);
+            otherTabVBox.PackStart(numberTypeBox, marginLeft: 10, marginTop: 5, marginRight: 10);
+            otherTabVBox.PackStart(anyTypeBox, marginLeft: 10, marginTop: 5, marginRight: 10);
+            otherTabVBox.PackStart(baseClassBox, marginLeft: 10, marginTop: 5, marginRight: 10);
+            otherTabVBox.PackStart(detectUUIDsCheckBox, marginLeft: 10, marginRight: 10);
+            otherTabVBox.PackStart(detectBooleansInStringsCheckBox, marginLeft: 10, marginRight: 10);
+            otherTabVBox.PackStart(detectDatesAndTimesCheckBox, marginLeft: 10, marginRight: 10);
+            otherTabVBox.PackStart(detectEnumsCheckBox, marginLeft: 10, marginRight: 10);
+            otherTabVBox.PackStart(detectIntegersInStringsCheckBox, marginLeft: 10, marginRight: 10);
+            otherTabVBox.PackStart(detectMapsCheckBox, marginLeft: 10, marginRight: 10);
+            otherTabVBox.PackStart(noIgnoreJsonRefsCheckBox, marginLeft: 10, marginRight: 10);
+            otherTabVBox.PackStart(mergeSimiliarClassesCheckBox, marginLeft: 10, marginRight: 10, marginBottom: 10);
+
 
             mainNotebook.Add(languageTabVBox, "Language");
             mainNotebook.Add(otherTabVBox, "Other");
 
-            mainVBox.PackStart(mainNotebook, marginTop: 5);
-            mainVBox.PackEnd(generateButton, false, WidgetPlacement.End, WidgetPlacement.End, margin: 10);
+            mainVBox.PackStart(mainNotebook, marginTop: 8);
+            mainVBox.PackEnd(generateButton, false, WidgetPlacement.End, WidgetPlacement.End, margin: 7);
         }
 
         private void AttachToEvents()

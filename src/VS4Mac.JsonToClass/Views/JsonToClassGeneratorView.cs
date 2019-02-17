@@ -29,11 +29,23 @@ namespace VS4Mac.JsonToClass.Views
         private void GenerateClass()
         {
             quicktypeProperties.Namespace = namespaceEntry.Text;
-            quicktypeProperties.ArrayType = (Model.ArrayType)arrayTypeComboBox.SelectedItem;
-            quicktypeProperties.FeatureOutput = (Model.Feature)outputFeatureComboBox.SelectedItem;
+            quicktypeProperties.ArrayType = (ArrayType)arrayTypeComboBox.SelectedItem;
+            quicktypeProperties.FeatureOutput = (Feature)outputFeatureComboBox.SelectedItem;
             quicktypeProperties.CheckRequired = checkRequiredCheckBox.Active;
             quicktypeProperties.AllPropertiesOptional = allPropertiesOptionalCheckBox.Active;
-            quicktypeProperties.CSharpVersion = (Model.CSharpVersion)languageVersionComboBox.SelectedItem;
+            quicktypeProperties.CSharpVersion = (CSharpVersion)languageVersionComboBox.SelectedItem;
+            quicktypeProperties.PropertyDensity = (Density)propertyDensityComboBox.SelectedItem;
+            quicktypeProperties.NumberType = (NumberType)numberTypeComboBox.SelectedItem;
+            quicktypeProperties.AnyType = (AnyType)anyTypeComboBox.SelectedItem;
+            quicktypeProperties.BaseClass = (BaseClassType)baseClassComboBox.SelectedItem;
+            quicktypeProperties.DetectUUIDs = detectUUIDsCheckBox.Active;
+            quicktypeProperties.DetectBooleansInStrings = detectBooleansInStringsCheckBox.Active;
+            quicktypeProperties.DetectDatesAndTimes = detectDatesAndTimesCheckBox.Active;
+            quicktypeProperties.DetectEnums = detectEnumsCheckBox.Active;
+            quicktypeProperties.DetectIntegersInStrings = detectIntegersInStringsCheckBox.Active;
+            quicktypeProperties.DetectMaps = detectMapsCheckBox.Active;
+            quicktypeProperties.NoIgnoreJsonRefs = noIgnoreJsonRefsCheckBox.Active;
+            quicktypeProperties.MergeSimilarClasses = mergeSimiliarClassesCheckBox.Active;  
 
             var generatedClass = jsonToClassService.GenerateClassCodeFromJson(Clipboard.GetText(), quicktypeProperties);
             IdeApp.Workbench.ActiveDocument.Editor.InsertAtCaret(generatedClass);
