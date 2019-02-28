@@ -1,6 +1,7 @@
 ﻿using System;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Ide;
+using VS4Mac.JsonToClass.Exceptions;
 using VS4Mac.JsonToClass.Services;
 using Xwt;
 
@@ -10,10 +11,17 @@ namespace VS4Mac.JsonToClass.Commands
     {
         protected override void Run()
         {
-            string json = Clipboard.GetText();
-            string classCode = new JsonToClassService().GenerateClassCodeFromJson(json);
+            try
+            {
+                string json = Clipboard.GetText();
+                string classCode = JsonToClassService.GenerateClassCodeFromJson(json);
 
-            IdeApp.Workbench.ActiveDocument.Editor.InsertAtCaret(classCode);
+                IdeApp.Workbench.ActiveDocument.Editor.InsertAtCaret(classCode);
+            }
+            catch (UninstalledQuicktypeException)
+            {
+                MessageDialog.ShowWarning("Ouch!", "Something has happened. You may not have Quicktime installed");
+            }
         }
 
         protected override void Update(CommandInfo info)

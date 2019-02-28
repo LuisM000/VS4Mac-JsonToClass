@@ -22,6 +22,7 @@
     <Folder Include="Extensions\" />
     <Folder Include="Views\" />
     <Folder Include="Model\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Commands\JsonToClassGeneratorCommand.cs" />

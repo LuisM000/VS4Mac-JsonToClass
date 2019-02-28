@@ -3,6 +3,7 @@ using System.IO;
 using MonoDevelop.Components;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui;
+using VS4Mac.JsonToClass.Exceptions;
 using VS4Mac.JsonToClass.Model;
 using VS4Mac.JsonToClass.Services;
 using Xwt;
@@ -13,7 +14,6 @@ namespace VS4Mac.JsonToClass.Views
     public partial class JsonToClassGeneratorView : PadContent
     {
         QuicktypeProperties quicktypeProperties;
-        JsonToClassService jsonToClassService = new JsonToClassService();
 
         public JsonToClassGeneratorView()
         {
@@ -27,6 +27,20 @@ namespace VS4Mac.JsonToClass.Views
         }
 
         private void GenerateClass()
+        {
+            try
+            {
+                LoadQuicktypeProperties();
+                var generatedClass = JsonToClassService.GenerateClassCodeFromJson(Clipboard.GetText(), quicktypeProperties);
+                IdeApp.Workbench.ActiveDocument.Editor.InsertAtCaret(generatedClass);
+            }
+            catch (UninstalledQuicktypeException)
+            {
+                MessageDialog.ShowWarning("Ouch!", "Something has happened. You may not have Quicktime installed");
+            }
+        }
+
+        private QuicktypeProperties LoadQuicktypeProperties()
         {
             quicktypeProperties.Namespace = namespaceEntry.Text;
             quicktypeProperties.ArrayType = (ArrayType)arrayTypeComboBox.SelectedItem;
@@ -45,10 +59,9 @@ namespace VS4Mac.JsonToClass.Views
             quicktypeProperties.DetectIntegersInStrings = detectIntegersInStringsCheckBox.Active;
             quicktypeProperties.DetectMaps = detectMapsCheckBox.Active;
             quicktypeProperties.NoIgnoreJsonRefs = noIgnoreJsonRefsCheckBox.Active;
-            quicktypeProperties.MergeSimilarClasses = mergeSimiliarClassesCheckBox.Active;  
+            quicktypeProperties.MergeSimilarClasses = mergeSimiliarClassesCheckBox.Active;
 
-            var generatedClass = jsonToClassService.GenerateClassCodeFromJson(Clipboard.GetText(), quicktypeProperties);
-            IdeApp.Workbench.ActiveDocument.Editor.InsertAtCaret(generatedClass);
+            return quicktypeProperties;
         }
     }
 }
