@@ -27,6 +27,7 @@ namespace VS4Mac.JsonToClass.Model
         public bool NoIgnoreJsonRefs { get; set; }
         public bool MergeSimilarClasses { get; set; }
 
+        public QuicktypeProperties() { }//don't remove. Used for serialization
         public QuicktypeProperties(string jsonFilename, string outputFile)
         {
             this.JsonFilename = jsonFilename;

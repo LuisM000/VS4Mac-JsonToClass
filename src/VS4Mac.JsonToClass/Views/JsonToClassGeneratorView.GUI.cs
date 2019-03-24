@@ -1,6 +1,7 @@
 ﻿using System;
 using MonoDevelop.Components;
 using MonoDevelop.Ide.Gui;
+using VS4Mac.JsonToClass.Services;
 using Xwt;
 
 namespace VS4Mac.JsonToClass.Views
@@ -24,7 +25,9 @@ namespace VS4Mac.JsonToClass.Views
         Notebook mainNotebook;
         VBox languageTabVBox;
         VBox otherTabVBox;
+        HBox buttonsHBox;
         Button generateButton;
+        Button saveButton;
 
         #region Language tab
 
@@ -89,6 +92,7 @@ namespace VS4Mac.JsonToClass.Views
         private void InitializeComponent()
         {
             Init();
+            LoadGUIFromQuicktypeProperties();
             Build();
             AttachToEvents();
         }
@@ -99,11 +103,13 @@ namespace VS4Mac.JsonToClass.Views
             mainNotebook = new Notebook();
             languageTabVBox = new VBox();
             otherTabVBox = new VBox();
+            buttonsHBox = new HBox();
             generateButton = new Button("Generate")
             {
                 BackgroundColor = Styles.BaseSelectionBackgroundColor,
                 LabelColor = Styles.BaseSelectionTextColor
             };
+            saveButton = new Button("Save settings");
 
             namespaceBox = new VBox();
             namespaceLabel = new Label("Generated namespace");
@@ -173,6 +179,28 @@ namespace VS4Mac.JsonToClass.Views
             mergeSimiliarClassesCheckBox = new CheckBox("Merge similar classes") { Active = true };
         }
 
+        private void LoadGUIFromQuicktypeProperties()
+        {
+            namespaceEntry.Text = quicktypeProperties.Namespace;
+            arrayTypeComboBox.SelectedItem = quicktypeProperties.ArrayType;
+            outputFeatureComboBox.SelectedItem = quicktypeProperties.FeatureOutput;
+            checkRequiredCheckBox.Active = quicktypeProperties.CheckRequired;
+            allPropertiesOptionalCheckBox.Active = quicktypeProperties.AllPropertiesOptional;
+            languageVersionComboBox.SelectedItem = quicktypeProperties.CSharpVersion;
+            propertyDensityComboBox.SelectedItem = quicktypeProperties.PropertyDensity;
+            numberTypeComboBox.SelectedItem = quicktypeProperties.NumberType;
+            anyTypeComboBox.SelectedItem = quicktypeProperties.AnyType;
+            baseClassComboBox.SelectedItem = quicktypeProperties.BaseClass;
+            detectUUIDsCheckBox.Active = quicktypeProperties.DetectUUIDs;
+            detectBooleansInStringsCheckBox.Active = quicktypeProperties.DetectBooleansInStrings;
+            detectDatesAndTimesCheckBox.Active = quicktypeProperties.DetectDatesAndTimes;
+            detectEnumsCheckBox.Active = quicktypeProperties.DetectEnums;
+            detectIntegersInStringsCheckBox.Active = quicktypeProperties.DetectIntegersInStrings;
+            detectMapsCheckBox.Active = quicktypeProperties.DetectMaps;
+            noIgnoreJsonRefsCheckBox.Active = quicktypeProperties.NoIgnoreJsonRefs;
+            mergeSimiliarClassesCheckBox.Active = quicktypeProperties.MergeSimilarClasses;
+        }
+
 
         private void Build()
         {
@@ -224,18 +252,27 @@ namespace VS4Mac.JsonToClass.Views
             mainNotebook.Add(languageTabVBox, "Language");
             mainNotebook.Add(otherTabVBox, "Other");
 
+            buttonsHBox.PackStart(saveButton);
+            buttonsHBox.PackEnd(generateButton);
+
             mainVBox.PackStart(mainNotebook, marginTop: 8);
-            mainVBox.PackEnd(generateButton, false, WidgetPlacement.End, WidgetPlacement.End, margin: 7);
+            mainVBox.PackEnd(buttonsHBox, false, WidgetPlacement.End, WidgetPlacement.End, margin: 7);
         }
 
         private void AttachToEvents()
         {
             generateButton.Clicked += GenerateButton_Clicked;
+            saveButton.Clicked += SaveButton_Clicked;
         }
 
         void GenerateButton_Clicked(object sender, EventArgs e)
         {
             this.GenerateClass();
+        }
+
+        void SaveButton_Clicked(object sender, EventArgs e)
+        {
+            this.SaveQuicktypeSettings();
         }
     }
 }

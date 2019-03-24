@@ -17,20 +17,20 @@ namespace VS4Mac.JsonToClass.Views
 
         public JsonToClassGeneratorView()
         {
-            InitializeComponent();
             InitializeQuicktype();
+            InitializeComponent();
         }      
 
         private void InitializeQuicktype()
         {
-            quicktypeProperties = new QuicktypeProperties(Path.GetTempFileName(), Path.Combine(Path.GetTempPath(), "EmptyClass.cs"));
+            quicktypeProperties = GetSavedQuicktypeProperties() ?? new QuicktypeProperties(Path.GetTempFileName(), Path.Combine(Path.GetTempPath(), "EmptyClass.cs"));
         }
 
         private void GenerateClass()
         {
             try
             {
-                LoadQuicktypeProperties();
+                LoadQuicktypePropertiesFromGUI();
                 var generatedClass = JsonToClassService.GenerateClassCodeFromJson(Clipboard.GetText(), quicktypeProperties);
                 IdeApp.Workbench.ActiveDocument.Editor.InsertAtCaret(generatedClass);
             }
@@ -40,7 +40,27 @@ namespace VS4Mac.JsonToClass.Views
             }
         }
 
-        private QuicktypeProperties LoadQuicktypeProperties()
+        private void SaveQuicktypeSettings()
+        {
+            var progressMonitor = IdeApp.Workbench.ProgressMonitors.GetStatusProgressMonitor("Saving settings...", Stock.StatusSolutionOperation, false, true, false);
+            try
+            {
+                LoadQuicktypePropertiesFromGUI();
+                SettingsService.SaveQuicktypeProperties(quicktypeProperties);
+                quicktypeProperties = SettingsService.LoadQuicktypeProperties();
+                progressMonitor.ReportSuccess("Saved settings");
+            }
+            catch (Exception ex)
+            {
+                progressMonitor.ReportError("Ouch! Something has happened...", ex);
+            }
+            finally
+            {
+                progressMonitor.Dispose();
+            }
+        }
+
+        private QuicktypeProperties LoadQuicktypePropertiesFromGUI()
         {
             quicktypeProperties.Namespace = namespaceEntry.Text;
             quicktypeProperties.ArrayType = (ArrayType)arrayTypeComboBox.SelectedItem;
@@ -62,6 +82,21 @@ namespace VS4Mac.JsonToClass.Views
             quicktypeProperties.MergeSimilarClasses = mergeSimiliarClassesCheckBox.Active;
 
             return quicktypeProperties;
+        }
+
+       
+        private QuicktypeProperties GetSavedQuicktypeProperties()
+        {
+            QuicktypeProperties savedQuicktypeProperties = null;
+            try
+            {
+                savedQuicktypeProperties = SettingsService.LoadQuicktypeProperties();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+            return savedQuicktypeProperties;
         }
     }
 }
