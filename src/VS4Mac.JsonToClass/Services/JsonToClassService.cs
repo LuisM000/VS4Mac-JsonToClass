@@ -42,10 +42,10 @@ namespace VS4Mac.JsonToClass.Services
                 process.WaitForExit();
                 if (process.ExitCode == 127)
                     throw new UninstalledQuicktypeException();
-                if (process.ExitCode == 0)
-                {
-                    result = File.ReadAllText(quicktypeProperties.OutputFile);
-                }
+                if (process.ExitCode != 0)
+                    throw new Exception(process.ExitCode.ToString());
+
+                result = File.ReadAllText(quicktypeProperties.OutputFile);
             }
 
             return result;

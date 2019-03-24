@@ -38,26 +38,25 @@ namespace VS4Mac.JsonToClass.Views
             {
                 MessageDialog.ShowWarning("Ouch!", "Something has happened. You may not have Quicktime installed");
             }
+            catch (Exception)
+            {
+                IdeApp.Workbench.StatusBar.ShowError("The model could not be generate");
+            }
         }
 
         private void SaveQuicktypeSettings()
         {
-            var progressMonitor = IdeApp.Workbench.ProgressMonitors.GetStatusProgressMonitor("Saving settings...", Stock.StatusSolutionOperation, false, true, false);
             try
             {
                 LoadQuicktypePropertiesFromGUI();
                 SettingsService.SaveQuicktypeProperties(quicktypeProperties);
-                quicktypeProperties = SettingsService.LoadQuicktypeProperties();
-                progressMonitor.ReportSuccess("Saved settings");
+                quicktypeProperties = SettingsService.LoadQuicktypeProperties(); 
+                IdeApp.Workbench.StatusBar.ShowMessage("Saved settings");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                progressMonitor.ReportError("Ouch! Something has happened...", ex);
-            }
-            finally
-            {
-                progressMonitor.Dispose();
-            }
+                IdeApp.Workbench.StatusBar.ShowError("Ouch! Something has happened...");
+            }           
         }
 
         private QuicktypeProperties LoadQuicktypePropertiesFromGUI()
