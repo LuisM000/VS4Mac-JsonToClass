@@ -1,9 +1,4 @@
-﻿//
-// AddinInfo.cs
-//
-// Author:
-//       Mikayla Hutchinson <m.j.hutchinson@gmail.com>
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using Mono.Addins;
 using Mono.Addins.Description;
@@ -11,7 +6,7 @@ using Mono.Addins.Description;
 [assembly: Addin(
     "JsonToClass",
     Namespace = "VS4Mac.JsonToClass",
-    Version = "0.1"
+    Version = "0.2"
 )]
 
 [assembly: AddinName("Json to class")]
