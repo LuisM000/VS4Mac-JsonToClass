@@ -36,7 +36,7 @@ namespace VS4Mac.JsonToClass.Views
             }
             catch (UninstalledQuicktypeException)
             {
-                MessageDialog.ShowWarning("Ouch!", "Something has happened. You may not have Quicktime installed");
+                MessageDialog.ShowWarning("Ouch!", "Something has happened. You may not have QuickType installed");
             }
             catch (Exception)
             {
