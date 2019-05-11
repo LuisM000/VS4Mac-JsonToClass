@@ -1,8 +1,3 @@
-# Xamarin.Android
-# Build a Xamarin.Android project.
-# Add steps that test, sign, and distribute an app, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/xamarin
-
 trigger:
 - master
 
@@ -20,8 +15,8 @@ steps:
   inputs:
     restoreSolution: '**/*.sln'
 
-- task: XamarinAndroid@1
+- task: DotNetCoreCLI@2
   inputs:
-    projectFile: '**/*Json*.csproj'
-    outputDirectory: '$(outputDirectory)'
-    configuration: '$(buildConfiguration)'
+    command: 'build'
+    feedsToUse: 'select'
+    versioningScheme: 'off'
